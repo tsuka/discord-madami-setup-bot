@@ -250,6 +250,9 @@ async def setup(ctx, num_of_player_param=None, num_of_secret_voice_channel_param
         await voice_category.create_voice_channel(f"密談{i+1}", overwrites=secret_voice_channel_permission)
     await voice_category.create_voice_channel("雑談")
 
+    # 通知設定をメンションのみに
+    await guild.edit(default_notifications=discord.NotificationLevel.only_mentions.value)
+
     await say(ctx, 'I done it.')
 
 bot.run(token)
