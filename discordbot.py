@@ -159,7 +159,7 @@ async def pid(ctx):
 
 @bot.command()
 async def neko(ctx):
-    await say(ctx, 'にゃーん')
+    await say(ctx, random.choice(['にゃーん', 'にゃあ', 'にゃにゃ', 'にゃん', 'にゃー', 'にゃーお', 'にゃあにゃあ']))
 
 
 @bot.command()
