@@ -11,7 +11,7 @@ import signal
 import sys
 from datetime import timedelta
 
-bot = commands.Bot(command_prefix='/')
+bot = commands.AutoShardedBot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
 
 
