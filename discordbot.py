@@ -19,70 +19,7 @@ async def say(ctx, message):
     logging.info(message)
     await ctx.send(message)
 
-def timer_id(ctx):
-    return ctx.guild.id
-
-timers = {}
 started_at = time.time()
-
-
-def parse_rest_time(timestr):
-    result = re.match(r'([\d\.]+)\s*(m(in)?)?', timestr)
-    return int(result[1])
-
-def next_minute(current_minute):
-  n = 0
-  if (current_minute > 10):
-    n = math.floor((current_minute - 1) / 10) * 10
-  elif (current_minute > 5):
-    n = 5
-  elif (current_minute > 3):
-    n = 3
-  else:
-    n = current_minute - 1
-  return n
-
-
-@bot.command()
-@commands.has_permissions(administrator=True)
-async def timer(ctx, arg):
-    await notify("timer")
-    global timers
-    tid = timer_id(ctx)
-
-    if arg == "stop":
-        timers[tid].close()
-        del timers[tid]
-        await say(ctx, "タイマーを停止しました")
-    else:
-        if tid in timers:
-            await say(ctx, "すでにスタートしています")
-        else:
-            minute = parse_rest_time(arg)
-            target_time = time.time() + minute * 60
-
-            nm = next_minute(minute)
-            await say(ctx, "タイマースタート")
-            while True:
-                timers[tid] = asyncio.sleep(target_time - time.time() - nm * 60)
-                await timers[tid]
-                if nm > 0:
-                    msg = f"@here 残り{nm}分です!"
-                    await say(ctx, msg)
-                    nm = next_minute(nm)
-                else:
-                    await say(ctx, "@here タイマー終了!")
-                    await ctx.send("...時間です", tts=True)
-                    del timers[tid]
-                    break
-
-
-
-# @bot.event
-# async def on_command_error(ctx, error):
-#     orig_error = getattr(error, "original", error)
-#     error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
-#     await ctx.send(error_msg)
 
 def find_by_name(items, names):
     return next(filter(lambda item: item.name in names, items))
@@ -255,4 +192,5 @@ async def setup(ctx, num_of_player_param=None, num_of_secret_voice_channel_param
 
     await say(ctx, 'I done it.')
 
+bot.load_extension("cogs.timer")
 bot.run(token)
