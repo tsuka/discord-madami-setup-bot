@@ -91,8 +91,8 @@ class Timer(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
-    async def timer_list(self, ctx):
-        print(self.timers)
+    async def timer_count(self, ctx):
+        print(len(self.timers))
 
 
 def setup(bot):
