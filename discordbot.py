@@ -10,14 +10,14 @@ import math
 import signal
 import sys
 from datetime import timedelta
+import utils
+from utils import (notify, say)
+
 
 bot = commands.AutoShardedBot(command_prefix='/')
+utils.bot = bot
 token = os.environ['DISCORD_BOT_TOKEN']
 
-
-async def say(ctx, message):
-    logging.info(message)
-    await ctx.send(message)
 
 started_at = time.time()
 
@@ -54,11 +54,6 @@ async def on_guild_join(guild):
 
 def format_elapsed(sec):
     return str(timedelta(seconds=(time.time() - sec)))
-
-async def notify(msg):
-    server_id = os.environ.get('DEPLOY_NOTIFY', None)
-    if server_id:
-        await bot.get_guild(int(server_id)).text_channels[0].send(msg)
 
 async def notify_with_sysinfo(msg):
     global connected_at, started_at
