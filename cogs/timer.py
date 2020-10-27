@@ -58,6 +58,7 @@ class Timer(commands.Cog):
         if arg == "stop":
             self.timer_stop(tid)
             await say(ctx, "タイマーを停止しました")
+            print(f"timer: {len(self.timers)}")
         else:
             if self.timer_exists(tid):
                 await say(ctx, "すでにスタートしています")
@@ -70,6 +71,7 @@ class Timer(commands.Cog):
                 while True:
                     self.set_timer(tid, asyncio.sleep(
                         target_time - time.time() - nm * 60))
+                    print(f"timer: {len(self.timers)}")
                     await self.get_timer(tid)
                     if nm > 0:
                         msg = f"@here 残り{nm}分です!"
@@ -79,6 +81,7 @@ class Timer(commands.Cog):
                         await say(ctx, "@here タイマー終了!")
                         await ctx.send("...時間です", tts=True)
                         self.delete_timer(tid)
+                        print(f"timer: {len(self.timers)}")
                         break
 
     @commands.command()
