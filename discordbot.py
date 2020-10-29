@@ -49,7 +49,7 @@ async def on_guild_join(guild):
     server_id = os.environ.get('DEPLOY_NOTIFY', None)
     if server_id:
         owner_id = guild.owner_id
-        count = len(g for g in bot.guilds if g.owner_id == owner_id)
+        count = len(list(g for g in bot.guilds if g.owner_id == owner_id))
         await notify(
             f"Guild count: {len(bot.guilds)}, ({count})")
 
